@@ -31,6 +31,8 @@ Assuming you install gRPC and Protocol Buffer related stuffs for Go:
 
 Since, the default url is hardcoded, you will get parsed results of the input url. Note that server uses "50051" port and the client connects "localhost:50051" as their default values. But they will be changable.
 
+As a note: Since compiling `parser.proto` was a pain for me (in Windows), I pushed the compiled version, too. So, you do not need to compile it, but you need gRPC related libraries installed for Go (Link: https://grpc.io/docs/quickstart/go.html)
+
 
 # TO-DO Tasks
 
