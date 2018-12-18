@@ -1,6 +1,6 @@
 # Go-based gRPC Server
 
-This repository is created for as a result of a technical interview task.
+This repository is created for a technical interview task.
 
 Note that I have no past Go, gRPC and webpage parsing experience before.
 
