@@ -26,10 +26,10 @@ This repository contains:
 Assuming you install gRPC and Protocol Buffer related stuffs for Go:
 
 - Open a command window, if you are against using any kind of IDEs, and type `go run parser_server_main.go`.
-- Open another command windows, and type `go run parser_client_main.go`. 
-- If you are using an IDE, just run/build/compile whatever button you have for both main.go files.
+- Open another command window, and type `go run parser_client_main.go`. 
+- If you are using an IDE, just press the run/build/compile whatever button you have for both main.go files.
 
-Since, the default url is hardcoded, you will get parsed results of the input url. Note that server uses "50051" port and the client connects "localhost:50051" as their default values. But they will be changable.
+Since, the default url is hardcoded, you will get parsed results of the input url. Note that server uses "50051" port and the client connects "localhost:50051" as their default values. But all these constant default variables will become input arguments in very near future.
 
 As a note: Since compiling `parser.proto` was a pain for me (in Windows), I pushed the compiled version, too. So, you do not need to compile it, but you need gRPC related libraries installed for Go to run this repository (For how to install gRPC: https://grpc.io/docs/quickstart/go.html)
 
