@@ -2,6 +2,8 @@
 
 This repository is created for as a result of a technical interview task.
 
+Note that I have no past Go, gRPC and webpage parsing experience before.
+
 # Introduction
 
 The aim of the task is to write a gRPC server (Nope, I won't give too much detail, just google it) which will serve a "ParseURL" 
@@ -19,6 +21,25 @@ This repository contains:
 - A server main code `parser_server_main.go`
 - A client (for tests) main code `parser_client_main.go`
 
+# How to Run
+
+Assuming you install gRPC and Protocol Buffer related stuffs for Go:
+
+- Open a command window, if you are against using any kind of IDEs, and type `go run parser_server_main.go`.
+- Open another command windows, and type `go run parser_client_main.go`. 
+- If you are using an IDE, just run/build/compile whatever button you have for both main.go files.
+
+Since, the default url is hardcoded, you will get parsed results of the input url. Note that server uses "50051" port and the client connects "localhost:50051" as their default values. But they will be changable.
+
+
+# TO-DO Tasks
+
+- [ ] Server code will take "-port" as input argument/parameter 
+- [ ] Client code will take "-address" and "-url" as input argument/parameter
+- [ ] Parser function to parse "content" of the page.
+- [ ] Learn mock and write unit-tests.
+- [ ] Write an extended README for installing and using this project. 
+
 # Finished Tasks
 
 - [x] Write and compile `.proto` file to define request and response methods.
@@ -30,11 +51,5 @@ This repository contains:
   - [x] If images in a page does not have any `alt` attribute or do not fit the defined structure, it returns the first image found in the page.
 - [x] For dumb-downed, personal tests, a client code has been written.
 
-# TO-DO Tasks
-
-- [ ] Server code will take "-port" as input argument/parameter (it is a constant value in the current version)
-- [ ] Parser function to parse "content" of the page.
-- [ ] Learn mock and write unit-tests.
-- [ ] Write an extended README for installing and using this project. 
 
 
