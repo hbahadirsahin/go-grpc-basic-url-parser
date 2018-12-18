@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package parser;
+
+service ParserService {
+    rpc Parse (ParserRequest) returns (ParserResponse);
+}
+
+// The request message containing the url.
+message ParserRequest {
+    string url = 1;
+}
+
+// The response message containing the url's title, body and links of thumbnails.
+message ParserResponse {
+    string title = 1;
+    string thumbnail = 2;
+    string body = 3;
+}
