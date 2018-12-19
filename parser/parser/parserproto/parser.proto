@@ -14,6 +14,6 @@ message ParserRequest {
 // The response message containing the url's title, body and links of thumbnails.
 message ParserResponse {
     string title = 1;
-    string thumbnail = 2;
-    string body = 3;
+    string thumbnail_url = 2;
+    string content = 3;
 }

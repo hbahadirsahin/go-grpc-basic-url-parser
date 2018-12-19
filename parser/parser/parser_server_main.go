@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -18,11 +19,11 @@ import (
 type parser_server struct{}
 
 func (ps *parser_server) Parse(ctx context.Context, input *pb.ParserRequest) (*pb.ParserResponse, error) {
-	title, imgUrl := processHTML(input.Url)
-	return &pb.ParserResponse{Title: title, Thumbnail: imgUrl}, nil
+	title, imgUrl, content := processHTML(input.Url)
+	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, nil
 }
 
-func processHTML(url string) (string, string) {
+func processHTML(url string) (string, string, string) {
 	// HTTP Request
 	response, err := http.Get(url)
 	if err != nil {
@@ -40,7 +41,9 @@ func processHTML(url string) (string, string) {
 	fmt.Println("Title: " + title)
 	imgUrl := getThumbnailImage(*document)
 	fmt.Println("ImageURL: " + imgUrl)
-	return title, imgUrl
+	content := getContent(*document)
+	fmt.Println("Content: " + content)
+	return title, imgUrl, content
 }
 
 func getTitle(document goquery.Document) string {
@@ -98,9 +101,25 @@ func getTitle(document goquery.Document) string {
 }
 
 func getContent(document goquery.Document) string {
-	content := ""
+	var sb strings.Builder
 
-	return content
+	// Content parser for specific to Medium Blog.
+	document.Find(".section-inner.sectionLayout--insetColumn").Each(func(index int, item *goquery.Selection) {
+		item.Contents().Each(func(i int, ctx *goquery.Selection) {
+			tmp := ctx.Text()
+			if tmp != "" && !strings.Contains(tmp, "BlockedUnblockFollowFollowing") {
+				sb.WriteString(tmp)
+				sb.WriteString("\n")
+				fmt.Printf("%d: %s\n", i, tmp)
+			}
+		})
+	})
+
+	if sb.String() == "" {
+		fmt.Println("Input is either empty webpage or its HTML is not parsable with current state of this code!")
+	}
+
+	return sb.String()
 }
 
 func getThumbnailImage(document goquery.Document) string {
@@ -148,7 +167,6 @@ func getThumbnailImage(document goquery.Document) string {
 func main() {
 	portArg := flag.Int("port", 50051, "An integer argument for port. Default value is 50051")
 	flag.Parse()
-
 	port := ":" + strconv.Itoa(*portArg)
 
 	lis, err := net.Listen("tcp", port)

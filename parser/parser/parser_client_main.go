@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	address     = "localhost:50051"
-	default_url = "https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f"
+	address = "localhost:80"
+	//default_url = "https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f"
 	//default_url = "http://www.hurriyet.com.tr/gundem/son-dakika-murat-ozdemir-serbest-birakildi-41055578"
-	//default_url = "https://www.sozcu.com.tr/2018/gundem/son-dakika-akpde-isyan-eden-ilce-teskilati-gorevden-alindi-2802280/"
+	default_url = "https://www.sozcu.com.tr/2018/gundem/son-dakika-akpde-isyan-eden-ilce-teskilati-gorevden-alindi-2802280/"
 )
 
 func main() {
@@ -40,5 +40,6 @@ func main() {
 		log.Fatalf("could not parse: %v", err)
 	}
 	log.Printf("Parsed Title: %s", r.Title)
-	log.Printf("Parsed Thumbnail Image URL: %s", r.Thumbnail)
+	log.Printf("Parsed Thumbnail Image URL: %s", r.ThumbnailUrl)
+	log.Printf("Parsed Content: %s", r.Content)
 }
