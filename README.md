@@ -43,12 +43,12 @@ As a note: Since compiling `parser.proto` was a pain for me (in Windows), I push
 
 # Finished Tasks 
 
-## Update date 19.12.2018
+## Update 19.12.2018
 
 - [x] Server code will take "-port" as input argument/parameter 
 - [x] A basic parser function is implemented to parse text "content" of "Medium Blog" pages. Again, since all pages are different, and I can't find a way to parse them all with a basic function, this function will be updated with 3-4 different page cases.
 
-## Update date 18.12.2018
+## Update 18.12.2018
 
 - [x] Write and compile `.proto` file to define request and response methods.
 - [x] Parse input URL and get title.
