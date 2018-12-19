@@ -2,19 +2,17 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net"
 	"net/http"
+	"strconv"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	pb "parser/parser/parserproto"
-)
-
-const (
-	port = ":50051"
 )
 
 type parser_server struct{}
@@ -148,6 +146,11 @@ func getThumbnailImage(document goquery.Document) string {
 }
 
 func main() {
+	portArg := flag.Int("port", 50051, "An integer argument for port. Default value is 50051")
+	flag.Parse()
+
+	port := ":" + strconv.Itoa(*portArg)
+
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
