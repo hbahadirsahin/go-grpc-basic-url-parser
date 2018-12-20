@@ -47,7 +47,7 @@ As a note: Since compiling `parser.proto` was a pain for me (in Windows), I push
 
 - [x] Parser function to parse "content" of the page.
   - [x] 2 more specific parsers are added. By specific, I mean the added parsing functionality is probably not gonna work for many different webpages.
-  - [x] A general purpose content parser functionality added. It gets the values of "<p>" tags first, then "<ol>" tags and finally "<ul>" tags. This method does not guarantees the order of the text if the content contains list(s). 
+  - [x] A general purpose content parser functionality added. It gets the values of `<p>` tags first, then `<ol>` tags and finally `<ul>` tags. This method does not guarantees the order of the text if the content contains list(s). 
 
 ## Update 19.12.2018
 
