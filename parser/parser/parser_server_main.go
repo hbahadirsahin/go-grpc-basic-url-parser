@@ -116,6 +116,62 @@ func getContent(document goquery.Document) string {
 	})
 
 	if sb.String() == "" {
+		// Content parser for specific to BBC News.
+		document.Find(".story-body__inner").Each(func(index int, item *goquery.Selection) {
+			item.ContentsFiltered("p").Each(func(i int, ctx *goquery.Selection) {
+				tmp := ctx.Text()
+				if tmp != "" && !strings.Contains(tmp, "\n") {
+					sb.WriteString(tmp)
+					sb.WriteString("\n")
+					fmt.Printf("%d: %s\n", i, tmp)
+				}
+			})
+		})
+	}
+
+	if sb.String() == "" {
+		// Content parser for specific to Fox News.
+		document.Find(".article-body").Each(func(index int, item *goquery.Selection) {
+			item.ContentsFiltered("p").Each(func(i int, ctx *goquery.Selection) {
+				tmp := ctx.Text()
+				if tmp != "" {
+					sb.WriteString(tmp)
+					sb.WriteString("\n")
+					fmt.Printf("%d: %s\n", i, tmp)
+				}
+			})
+		})
+	}
+
+	if sb.String() == "" {
+		// Content parser for general usage.
+		document.Find("body p").Each(func(index int, item *goquery.Selection) {
+			tmp := item.Text()
+			if tmp != "" {
+				sb.WriteString(tmp)
+				sb.WriteString("\n")
+				fmt.Printf("%d: %s\n", index, tmp)
+			}
+		})
+		document.Find("body ol").Each(func(index int, item *goquery.Selection) {
+			tmp := item.Text()
+			if tmp != "" {
+				sb.WriteString(tmp)
+				sb.WriteString("\n")
+				fmt.Printf("%d: %s\n", index, tmp)
+			}
+		})
+		document.Find("body ul").Each(func(index int, item *goquery.Selection) {
+			tmp := item.Text()
+			if tmp != "" {
+				sb.WriteString(tmp)
+				sb.WriteString("\n")
+				fmt.Printf("%d: %s\n", index, tmp)
+			}
+		})
+	}
+
+	if sb.String() == "" {
 		fmt.Println("Input is either empty webpage or its HTML is not parsable with current state of this code!")
 	}
 

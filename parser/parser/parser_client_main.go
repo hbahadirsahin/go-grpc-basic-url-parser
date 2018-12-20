@@ -15,6 +15,8 @@ const (
 	//default_url = "https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f"
 	//default_url = "http://www.hurriyet.com.tr/gundem/son-dakika-murat-ozdemir-serbest-birakildi-41055578"
 	default_url = "https://www.sozcu.com.tr/2018/gundem/son-dakika-akpde-isyan-eden-ilce-teskilati-gorevden-alindi-2802280/"
+	//default_url = "https://www.bbc.com/news/uk-england-sussex-46623754"
+	//default_url = "https://www.foxnews.com/politics/veteran-launches-gofundme-campaign-to-help-fund-border-wall"
 )
 
 func main() {
@@ -32,7 +34,7 @@ func main() {
 	if len(os.Args) > 1 {
 		url = os.Args[1]
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(10)*time.Second)
 	defer cancel()
 
 	r, err := c.Parse(ctx, &pb.ParserRequest{Url: url})
