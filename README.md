@@ -36,12 +36,15 @@ As a note: Since compiling `parser.proto` was a pain for me (in Windows), I push
 
 # TO-DO Tasks
 
-- [ ] Client code will take "-address" and "-url" as input argument/parameter
 - [ ] Learn mock and write unit-tests.
 - [ ] More edge case checker and better error handling.
 - [ ] Write an extended README for installing and using this project. 
 
 # Finished Tasks 
+
+## Update 21.12.2018
+
+- [x] Client code will take "-address" and "-url" as input argument/parameter
 
 ## Update 20.12.2018
 
