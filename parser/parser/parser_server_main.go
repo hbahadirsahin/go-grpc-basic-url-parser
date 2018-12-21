@@ -226,6 +226,7 @@ func main() {
 	port := ":" + strconv.Itoa(*portArg)
 
 	lis, err := net.Listen("tcp", port)
+	log.Printf("Listening the port %s", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
