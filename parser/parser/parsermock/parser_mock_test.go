@@ -1,4 +1,4 @@
-package mock_parser
+package parsermock
 
 import (
 	"context"
