@@ -36,11 +36,17 @@ As a note: Since compiling `parser.proto` was a pain for me (in Windows), I push
 
 # TO-DO Tasks
 
-- [ ] Learn mock and write unit-tests.
+- [ ] Extend unit tests.
 - [ ] More edge case checker and better error handling.
 - [ ] Write an extended README for installing and using this project. 
 
 # Finished Tasks 
+
+## Update 23.12.2018
+
+- [x] Learn mock and write unit-tests.
+  - [x] Mock for client is created by using "mockgen".
+  - [x] A basic test is implemented for testing the first unit test I've written in Go. 
 
 ## Update 21.12.2018
 
