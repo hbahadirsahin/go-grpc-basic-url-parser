@@ -233,7 +233,6 @@ func getThumbnailImage(document goquery.Document) string {
 
 func (ps *parser_server) ParseTest(ctx context.Context, input *pb.ParserTestRequest) (*pb.ParserResponse, error) {
 	title, imgUrl, content, err := processFileHTML(input.FilePath)
-	fmt.Println(title, "-", imgUrl, "-", content, "-", err)
 	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, err
 }
 
