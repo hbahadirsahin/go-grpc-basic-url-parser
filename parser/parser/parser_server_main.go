@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -19,22 +20,32 @@ import (
 type parser_server struct{}
 
 func (ps *parser_server) Parse(ctx context.Context, input *pb.ParserRequest) (*pb.ParserResponse, error) {
-	title, imgUrl, content := processHTML(input.Url)
-	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, nil
+	title, imgUrl, content, err := processHTML(input.Url)
+	fmt.Println(title, "-", imgUrl, "-", content, "-", err)
+	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, err
 }
 
-func processHTML(url string) (string, string, string) {
-	// HTTP Request
-	response, err := http.Get(url)
+func processHTML(inputUrl string) (string, string, string, error) {
+	// Check URL validity
+	_, err := url.ParseRequestURI(inputUrl)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return "", "", "", err
+	}
+
+	// HTTP Request
+	response, err := http.Get(inputUrl)
+	if err != nil {
+		log.Println(err)
+		return "", "", "", err
 	}
 	defer response.Body.Close()
 
 	// Create a goquery document from the HTTP response
 	document, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
-		log.Fatal("Error loading HTTP response body", err)
+		log.Println("Error loading HTTP response body", err)
+		return "", "", "", err
 	}
 
 	title := getTitle(*document)
@@ -43,7 +54,7 @@ func processHTML(url string) (string, string, string) {
 	fmt.Println("ImageURL: " + imgUrl)
 	content := getContent(*document)
 	fmt.Println("Content: " + content)
-	return title, imgUrl, content
+	return title, imgUrl, content, err
 }
 
 func getTitle(document goquery.Document) string {
