@@ -4,11 +4,17 @@ package parser;
 
 service ParserService {
     rpc Parse (ParserRequest) returns (ParserResponse);
+    rpc ParseTest (ParserTestRequest) returns (ParserResponse);
 }
 
 // The request message containing the url.
 message ParserRequest {
     string url = 1;
+}
+
+// The request message containing the file path.
+message ParserTestRequest{
+    string file_path = 1;
 }
 
 // The response message containing the url's title, body and links of thumbnails.

@@ -231,6 +231,24 @@ func getThumbnailImage(document goquery.Document) string {
 	return imageUrl
 }
 
+func (ps *parser_server) ParseTest(ctx context.Context, input *pb.ParserTestRequest) (*pb.ParserResponse, error) {
+	title, imgUrl, content, err := processFileHTML(input.FilePath)
+	fmt.Println(title, "-", imgUrl, "-", content, "-", err)
+	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, err
+}
+
+func processFileHTML(inputFileHtml string) (string, string, string, error) {
+	document, err := goquery.NewDocumentFromReader(strings.NewReader(inputFileHtml))
+
+	title := getTitle(*document)
+	fmt.Println("Title: " + title)
+	imgUrl := getThumbnailImage(*document)
+	fmt.Println("ImageURL: " + imgUrl)
+	content := getContent(*document)
+	fmt.Println("Content: " + content)
+	return title, imgUrl, content, err
+}
+
 func main() {
 	portArg := flag.Int("port", 50051, "An integer argument for port. Default value is 50051")
 	flag.Parse()
