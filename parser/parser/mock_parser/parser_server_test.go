@@ -197,38 +197,53 @@ func getThumbnailImage(document goquery.Document) string {
 		imageUrl, _ = tag.Attr("src")
 	})
 
+	// Get the image with longest <alt> attribute for a specific newspaper (I do not remember for which one).
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("body article section").Find("img").Each(func(index int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
 
+	// Get the image with longest <alt> attribute for a specific newspaper (I do not remember for which one).
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("body div").Find("img").Each(func(index int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
 
+	// Get the image with longest <alt> attribute for any web page that are not fit to the previous 3 cases.
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("img").Each(func(i int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
@@ -335,6 +350,12 @@ func TestParse(t *testing.T) {
 			path:          "./test_urls/test_url6.html",
 			wantTitle:     "There is no title-related tags found in the given URL!",
 			wantThumbnail: "There is no image-related tags found in the given URL!",
+			wantContent:   "Input is either empty webpage or its HTML is not parsable with current state of this code!",
+		},
+		{
+			path:          "./test_urls/test_url7.html",
+			wantTitle:     "Test Page7!",
+			wantThumbnail: "3.jpg",
 			wantContent:   "Input is either empty webpage or its HTML is not parsable with current state of this code!",
 		},
 	}

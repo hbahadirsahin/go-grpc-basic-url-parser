@@ -190,44 +190,60 @@ func getContent(document goquery.Document) string {
 }
 
 func getThumbnailImage(document goquery.Document) string {
+	// Get the first image from a Medium Blog page.
 	imageUrl := ""
 	document.Find("figure img").Each(func(index int, item *goquery.Selection) {
 		tag := item
 		imageUrl, _ = tag.Attr("src")
 	})
 
+	// Get the image with longest <alt> attribute for a specific newspaper (I do not remember for which one).
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("body article section").Find("img").Each(func(index int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
 
+	// Get the image with longest <alt> attribute for a specific newspaper (I do not remember for which one).
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("body div").Find("img").Each(func(index int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
 
+	// Get the image with longest <alt> attribute for any web page that are not fit to the previous 3 cases.
 	if imageUrl == "" {
 		prevImgAlt := ""
 		document.Find("img").Each(func(i int, item *goquery.Selection) {
 			tag := item
-			imageAlt, _ := tag.Attr("alt")
-			if len(prevImgAlt) < len(imageAlt) {
+			imageAlt, exist := tag.Attr("alt")
+			if exist {
+				if len(prevImgAlt) < len(imageAlt) {
+					imageUrl, _ = tag.Attr("src")
+					prevImgAlt = imageAlt
+				}
+			} else {
 				imageUrl, _ = tag.Attr("src")
-				prevImgAlt = imageAlt
 			}
 		})
 	}
