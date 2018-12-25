@@ -11,17 +11,8 @@ import (
 	pb "parser/parser/parserproto"
 )
 
-const (
-	address = "localhost:1234"
-	//default_url = "https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f"
-	//default_url = "http://www.hurriyet.com.tr/gundem/son-dakika-murat-ozdemir-serbest-birakildi-41055578"
-	//default_url = "https://www.sozcu.com.tr/2018/gundem/son-dakika-akpde-isyan-eden-ilce-teskilati-gorevden-alindi-2802280/"
-	//default_url = "https://www.bbc.com/news/uk-england-sussex-46623754"
-	default_url = "https://www.foxnews.com/politics/veteran-launches-gofundme-campaign-to-help-fund-border-wall"
-)
-
 func main() {
-	serverAddress := flag.String("address", "localhost:80", "A string argument for IP. Default value is localhost(it directs to 127.0.0.1:80)")
+	serverAddress := flag.String("address", "localhost:50051", "A string argument for IP. Default value is localhost(it directs to 127.0.0.1:80)")
 	inputUrl := flag.String("url", "https://medium.com/jatana/report-on-text-classification-using-cnn-rnn-han-f0e887214d5f", "A string argument for the input URL.")
 	flag.Parse()
 
