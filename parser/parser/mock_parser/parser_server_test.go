@@ -121,7 +121,7 @@ func getContent(document goquery.Document) string {
 			tmp := ctx.Text()
 			if tmp != "" && !strings.Contains(tmp, "BlockedUnblockFollowFollowing") {
 				sb.WriteString(tmp)
-				sb.WriteString("\n")
+				sb.WriteString(" ")
 				fmt.Printf("%d: %s\n", i, tmp)
 			}
 		})
@@ -134,7 +134,7 @@ func getContent(document goquery.Document) string {
 				tmp := ctx.Text()
 				if tmp != "" && !strings.Contains(tmp, "\n") {
 					sb.WriteString(tmp)
-					sb.WriteString("\n")
+					sb.WriteString(" ")
 					fmt.Printf("%d: %s\n", i, tmp)
 				}
 			})
@@ -146,9 +146,9 @@ func getContent(document goquery.Document) string {
 		document.Find(".article-body").Each(func(index int, item *goquery.Selection) {
 			item.ContentsFiltered("p").Each(func(i int, ctx *goquery.Selection) {
 				tmp := ctx.Text()
-				if tmp != "" {
+				if tmp != "" && !strings.Contains(tmp, "\n") {
 					sb.WriteString(tmp)
-					sb.WriteString("\n")
+					sb.WriteString(" ")
 					fmt.Printf("%d: %s\n", i, tmp)
 				}
 			})
@@ -159,9 +159,9 @@ func getContent(document goquery.Document) string {
 		// Content parser for general usage.
 		document.Find("body p").Each(func(index int, item *goquery.Selection) {
 			tmp := item.Text()
-			if tmp != "" {
+			if tmp != "" && !strings.Contains(tmp, "\n") {
 				sb.WriteString(tmp)
-				sb.WriteString("\n")
+				sb.WriteString(" ")
 				fmt.Printf("%d: %s\n", index, tmp)
 			}
 		})
@@ -169,7 +169,7 @@ func getContent(document goquery.Document) string {
 			tmp := item.Text()
 			if tmp != "" {
 				sb.WriteString(tmp)
-				sb.WriteString("\n")
+				sb.WriteString(" ")
 				fmt.Printf("%d: %s\n", index, tmp)
 			}
 		})
@@ -177,7 +177,7 @@ func getContent(document goquery.Document) string {
 			tmp := item.Text()
 			if tmp != "" {
 				sb.WriteString(tmp)
-				sb.WriteString("\n")
+				sb.WriteString(" ")
 				fmt.Printf("%d: %s\n", index, tmp)
 			}
 		})
@@ -187,7 +187,7 @@ func getContent(document goquery.Document) string {
 		sb.WriteString("Input is either empty webpage or its HTML is not parsable with current state of this code!")
 	}
 
-	return sb.String()
+	return strings.TrimSpace(sb.String())
 }
 
 func getThumbnailImage(document goquery.Document) string {
@@ -311,6 +311,30 @@ func TestParse(t *testing.T) {
 			path:          "./test_urls/test_url2.html",
 			wantTitle:     "Test Page2!",
 			wantThumbnail: "3.jpg",
+			wantContent:   "Input is either empty webpage or its HTML is not parsable with current state of this code!",
+		},
+		{
+			path:          "./test_urls/test_url3.html",
+			wantTitle:     "Test Page3!",
+			wantThumbnail: "3.jpg",
+			wantContent:   "Stuff to p1 Stuff to p2",
+		},
+		{
+			path:          "./test_urls/test_url4.html",
+			wantTitle:     "Test Page4 in h1 tag!",
+			wantThumbnail: "3.jpg",
+			wantContent:   "Stuff to p1 Stuff to p2",
+		},
+		{
+			path:          "./test_urls/test_url5.html",
+			wantTitle:     "There is no title-related tags found in the given URL!",
+			wantThumbnail: "There is no image-related tags found in the given URL!",
+			wantContent:   "Input is either empty webpage or its HTML is not parsable with current state of this code!",
+		},
+		{
+			path:          "./test_urls/test_url6.html",
+			wantTitle:     "There is no title-related tags found in the given URL!",
+			wantThumbnail: "There is no image-related tags found in the given URL!",
 			wantContent:   "Input is either empty webpage or its HTML is not parsable with current state of this code!",
 		},
 	}
