@@ -156,6 +156,7 @@ func getContent(document goquery.Document) string {
 
 	if sb.String() == "" {
 		// Content parser for general usage.
+		// Take all texts tagged with <p>
 		document.Find("body p").Each(func(index int, item *goquery.Selection) {
 			tmp := item.Text()
 			if tmp != "" && !strings.Contains(tmp, "\n") {
@@ -164,6 +165,7 @@ func getContent(document goquery.Document) string {
 				fmt.Printf("%d: %s\n", index, tmp)
 			}
 		})
+		// Take all texts in the (ordered) list
 		document.Find("body ol").Each(func(index int, item *goquery.Selection) {
 			tmp := item.Text()
 			if tmp != "" {
@@ -172,6 +174,7 @@ func getContent(document goquery.Document) string {
 				fmt.Printf("%d: %s\n", index, tmp)
 			}
 		})
+		// Take all texts in the (unordered) list
 		document.Find("body ul").Each(func(index int, item *goquery.Selection) {
 			tmp := item.Text()
 			if tmp != "" {
@@ -248,6 +251,7 @@ func getThumbnailImage(document goquery.Document) string {
 		})
 	}
 
+	// If page does not have any images, then send a message about it.
 	if imageUrl == "" {
 		imageUrl = "There is no image-related tags found in the given URL!"
 	}
@@ -255,11 +259,14 @@ func getThumbnailImage(document goquery.Document) string {
 	return imageUrl
 }
 
+// This method is for testing purposes. It is almost the equivalent of the Parse method!
 func (ps *parser_server) ParseTest(ctx context.Context, input *pb.ParserTestRequest) (*pb.ParserResponse, error) {
 	title, imgUrl, content, err := processFileHTML(input.FilePath)
 	return &pb.ParserResponse{Title: title, ThumbnailUrl: imgUrl, Content: content}, err
 }
 
+// This method is for testing purposes. It is almost the equivalent of the processUrl method!
+// Instead of a URL, it takes a file path which contains html page files.
 func processFileHTML(inputFileHtml string) (string, string, string, error) {
 	document, err := goquery.NewDocumentFromReader(strings.NewReader(inputFileHtml))
 
