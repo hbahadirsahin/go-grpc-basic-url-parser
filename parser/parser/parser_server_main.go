@@ -221,7 +221,15 @@ func getThumbnailImage(document goquery.Document) string {
 	}
 
 	if imageUrl == "" {
-		imageUrl = document.Find("img").Text()
+		prevImgAlt := ""
+		document.Find("img").Each(func(i int, item *goquery.Selection) {
+			tag := item
+			imageAlt, _ := tag.Attr("alt")
+			if len(prevImgAlt) < len(imageAlt) {
+				imageUrl, _ = tag.Attr("src")
+				prevImgAlt = imageAlt
+			}
+		})
 	}
 
 	if imageUrl == "" {
