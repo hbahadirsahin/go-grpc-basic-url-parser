@@ -22,26 +22,34 @@ This repository contains:
 - A server main code `parser_server_main.go`
 - A client (for tests) main code `parser_client_main.go`
 
+# How to Install
+
+I did not tested it but `go get github.com/hbahadirsahin/go-grpc-basic-url-parser` command should be enough for you to directly download this repository. Or you can manually download the repository. Or you can manually copy paste all codes into your own workspace.
+
 # How to Run
 
 Assuming you install gRPC and Protocol Buffer related stuffs for Go:
 
 - Open a command window, if you are against using any kind of IDEs, and type `go run parser_server_main.go`.
+  - You can arrange server's port by using `-port` argument. Example: `go run parser_server_main.go -port=123456`
 - Open another command window, and type `go run parser_client_main.go`. 
+  - You can change the server address to connect by `-address` and provide input url by `-url` arguments. Example: `go run parser_client_main.go -address=localhost:123456 -url=https://www.xyz.com`
+  - As a note, you need to provide full address of gRPC server is running (with IP and Port).
 - If you are using an IDE, just press the run/build/compile whatever button you have for both main.go files.
 
-Since, the default url is hardcoded, you will get parsed results of the input url. Note that server uses "50051" port and the client connects "localhost:50051" as their default values. But all these constant default variables will become input arguments in very near future.
+You do not need to enter specified arguments if you want to check whether the codes are running. The `-port` argument is *50051*, the `-address` argument is *localhost:50051* and the `-url` argument is a medium blog page by default.
 
 As a note: Since compiling `parser.proto` was a pain for me (in Windows), I pushed the compiled version, too. So, you do not need to compile it, but you need gRPC related libraries installed for Go to run this repository (For how to install gRPC: https://grpc.io/docs/quickstart/go.html)
 
-
-# TO-DO Tasks
-
-- [ ] Extend unit tests.
-- [ ] More edge case checker and better error handling.
-- [ ] Write an extended README for installing and using this project. 
-
 # Finished Tasks 
+
+## Update 25.12.2018
+
+- [x] Extend unit tests.
+  - [x] 7 cases are created and tested.
+- [x] More edge case checker and better error handling.
+  - [x] While testing the parsing methods, encountered problems with edge cases are handled properly (with bugfixes and understandable error logging).
+- [x] Write an extended README for installing and using this project. 
 
 ## Update 23.12.2018
 
