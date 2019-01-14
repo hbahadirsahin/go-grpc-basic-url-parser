@@ -4,6 +4,10 @@ This repository is created for a technical interview task.
 
 Note that I have no past Go, gRPC and webpage parsing experience before.
 
+# Update
+
+Well, I got rejected. Seems not knowing Go in expert level for a machine learning position is bad. There are several minor problems in this repository (in my point of view obviously, things that can be fixed by one key stroke); however, I won't fix it =) Btw `go get` is not working, because I am not an expert in Go =)
+
 # Introduction
 
 The aim of the task is to write a gRPC server (Nope, I won't give too much detail, just google it) which will serve a "ParseURL" 
